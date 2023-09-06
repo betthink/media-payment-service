@@ -1,5 +1,6 @@
 // library
 import React, { useEffect, useState } from "react";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 // components
 import { ProfileFoto } from "./Image/Images";
 import { axiosInstance } from "../utils/axiosInstance";
@@ -7,7 +8,9 @@ const Saldo = () => {
   // variables
   const token = localStorage.getItem("token");
   const [dataProfile, setdataProfile] = useState([]);
-  const [dataBalance, setdataBalance] = useState(null);
+  const [dataBalance, setdataBalance] = useState(0);
+  const [isVisible, setisVisible] = useState(false);
+
   // functions
   const handleGetProfile = async () => {
     try {
@@ -41,9 +44,12 @@ const Saldo = () => {
       }
     } catch (error) {}
   };
+  const handleVisibleBalance = () => {
+    setisVisible((prev) => !prev);
+  };
   useEffect(() => {
-    handleGetProfile();
     handleGetBalance();
+    handleGetProfile();
   }, []);
   return (
     <section className="flex flex-row items-center mt-10 justify-between container w-full">
@@ -69,9 +75,29 @@ const Saldo = () => {
       >
         <div className="card-body">
           <h2 className="card-title">Saldo Anda</h2>
-          <p>Rp. {dataBalance?.balance}</p>
+          {!isVisible ? (
+            <p>
+              Rp.{" "}
+              {dataBalance
+                ? "*".repeat(dataBalance.balance.toString().length)
+                : ""}
+            </p>
+          ) : (
+            <p>Rp. {dataBalance?.balance}</p>
+          )}
+
           <div className="card-actions justify-start">
-            <button className="btn rounded-none ">Lihat Saldo</button>
+            <button
+              type="button"
+              onClick={handleVisibleBalance}
+              className="py-3 pr-20 bg-[#F13B2F] "
+            >
+              {isVisible ? (
+                <AiOutlineEye size={18} />
+              ) : (
+                <AiOutlineEyeInvisible size={18} />
+              )}
+            </button>
           </div>
         </div>
       </div>

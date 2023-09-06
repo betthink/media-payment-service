@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Saldo from "../../components/Saldo";
-import TextInput from "../../components/Form/TextInput";
 import SubmitButton from "../../components/Button/SubmitButton";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const TopUpPage = () => {
   // variables
+  const token = localStorage.getItem("token");
   const [price, setPrice] = useState(0);
+  const [dataSaldo, setdataSaldo] = useState([
+    { message: "", balance: "", isLoad: false },
+  ]);
   const navigate = useNavigate();
   const dataPriceSelection = [
     { price: "10.000", value: 10000 },
@@ -20,13 +24,47 @@ const TopUpPage = () => {
   // functions
   const handleSubmitTopUp = async (event) => {
     event.preventDefault();
-    alert(`Kamu Top Up ${price}`);
-    navigate("/payment");
+    try {
+      const response = await axios.post(
+        "https://take-home-test-api.nutech-integrasi.app/topup",
+        {
+          top_up_amount: parseInt(price),
+        },
+        {
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const { status, data } = response;
+      console.log(data.data);
+      if (status === 200) {
+        alert(data.message, data.balance);
+        setdataSaldo((prevData) => {
+          const newData = [...prevData];
+          newData[0] = {
+            ...newData[0],
+            message: data.message,
+            balance: data.balance,
+            isLoad: true,
+          };
+        });
+      } else {
+        alert("network error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   const getValuePrice = (value) => {
     setPrice(value);
   };
-
+useEffect(()=>{
+  
+},)
   return (
     <div className="h-screen">
       <Navbar />
@@ -42,7 +80,7 @@ const TopUpPage = () => {
         >
           <input
             onChange={(e) => setPrice(e.target.value)}
-            value={price}
+            value={price === 0 ? "" : price}
             type="text"
             placeholder={"Rp.  Masukkan Nominal"}
             className="input input-bordered rounded-none w-full"

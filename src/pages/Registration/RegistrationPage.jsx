@@ -1,6 +1,6 @@
 // library
 import React from "react";
-import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
 // components
 import LoginIlustrate from "../../assets/Illustrasi Login.png";
@@ -13,7 +13,7 @@ const RegistrationPage = () => {
   const initialValues = {
     email: "",
     firstName: "",
-    secondName: "",
+    lastName: "",
     password: "",
     confirmPassword: "",
   };
@@ -31,7 +31,7 @@ const RegistrationPage = () => {
       type: "text",
     },
     {
-      name: "secondName",
+      name: "lastName",
       icon: "#",
       placeholder: "masukkan nama belakang anda",
       type: "text",
@@ -52,7 +52,7 @@ const RegistrationPage = () => {
   const validationSchema = yup.object().shape({
     email: yup.string().required("Tolong masukkan email dengan benar").email(),
     firstName: yup.string().required("Nama depan harus diisi"),
-    secondName: yup.string().required("Nama belakang harus diisi"),
+    lastName: yup.string().required("Nama belakang harus diisi"),
     password: yup
       .string()
       .required()
@@ -68,7 +68,7 @@ const RegistrationPage = () => {
   const handleRegistration = async (values) => {
     console.log(values);
     try {
-      const { email, firstName, secondName, password } = values;
+      const { email, firstName, lastName, password } = values;
       const response = await axios({
         method: "post",
         url: "https://take-home-test-api.nutech-integrasi.app/registration",
@@ -79,7 +79,7 @@ const RegistrationPage = () => {
         data: {
           email: email,
           first_name: firstName,
-          last_name: secondName,
+          last_name: lastName,
           password: password,
         },
       });
