@@ -62,14 +62,12 @@ const TopUpPage = () => {
   const getValuePrice = (value) => {
     setPrice(value);
   };
-useEffect(()=>{
-  
-},)
+  useEffect(() => {});
   return (
     <div className="h-screen">
       <Navbar />
       <Saldo />
-      <div className="container mt-10">
+      <div className="container my-10">
         <p>Sihlakan masukkan </p>
         <p className="font-bold text-2xl">Nominal Top Up </p>
       </div>
@@ -87,7 +85,7 @@ useEffect(()=>{
           />
 
           <SubmitButton
-            isDisable={price < 10000}
+            isDisable={price < 10000 || price > 1000000}
             bgColor={"red"}
             label={"Top Up"}
           />

@@ -64,7 +64,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className=" flex flex-row justify-between pt-10 h-screen overflow-hidden container">
+    <div className=" flex flex-row justify-between pt-10 h-screen  items-center overflow-hidden container">
       <div className="w-1/2 flex flex-col  text-center items-center">
         <div className="text-lg font-bold text-slate-700">
           <div className="font-thin text-base mb-4">SIMS PPOB</div>

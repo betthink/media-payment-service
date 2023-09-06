@@ -16,8 +16,11 @@ export default {
       center: true,
     },
     extend: {
+      colors: {
+        redDominan: "#F13B2F",
+      },
       backgroundImage: {
-        "saldoImg": "url('./src/assets/Background Saldo.png')",
+        saldoImg: "url('./src/assets/Background Saldo.png')",
         "footer-texture": "url('/img/footer-texture.png')",
       },
     },

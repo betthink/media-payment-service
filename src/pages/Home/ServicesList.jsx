@@ -1,7 +1,8 @@
 // library
 import React, { useEffect, useState } from "react";
-import { axiosInstance } from "../../utils/axiosInstance";
+import { Link } from "react-router-dom";
 // components
+import { axiosInstance } from "../../utils/axiosInstance";
 
 const ServicesList = () => {
   // variables
@@ -33,7 +34,18 @@ const ServicesList = () => {
   return (
     <div className="hidden md:flex flex-row md:gap-5 mt-10 justify-between container md:overflow-x-auto">
       {dataServices?.map((item, i) => (
-        <div key={i} className=" w-16 stroke-black  flex flex-col">
+        <Link
+          state={{
+            service_Code: item.service_code,
+            service_price: item.service_tariff,
+            service_icon: item.service_icon,
+          }}
+          to={{
+            pathname: "/payment",
+          }}
+          key={i}
+          className=" w-16 stroke-black  flex flex-col"
+        >
           <figure>
             <img
               className=""
@@ -44,7 +56,7 @@ const ServicesList = () => {
           <div className="text-center text-xs">
             <p>{item.service_name}</p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

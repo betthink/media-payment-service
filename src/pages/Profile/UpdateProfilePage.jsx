@@ -20,6 +20,7 @@ const UpdateProfilePage = () => {
   // variable
   const { state } = useLocation();
   const navigate = useNavigate();
+  const [dataImage, setdataImage] = useState(null);
   const token = localStorage.getItem("token");
   const initialValues = {
     email: state.email,
@@ -61,29 +62,63 @@ const UpdateProfilePage = () => {
       console.log(error);
     }
   };
+  const handleOnchangeImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setdataImage(file);
+    }
+  };
+  const handleUploadFIle = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("keterangan", "Ini adalah gambar profile");
 
-  useEffect(() => {}, []);
+      const response = await axios.put(
+        "https://take-home-test-api.nutech-integrasi.app/profile/image",
+        formData,
+        {
+          headers: {
+            accept: "application/json",
+            "Content-Type": "multipart/form-data",
+            Authorization: `Barier ${token}`,
+          },
+        }
+      );
+
+      console.log("Berhasil mengunggah file", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Gagal mengunggah file", error);
+      throw error;
+    }
+  };
+  useEffect(() => {
+    console.log(UpdateProfilePage);
+  }, [UpdateProfilePage]);
   return (
     <div>
       <Navbar />
       <div className=" w-[900px] container justify-center flex flex-col py-6">
         {/* profile img */}
         <div className=" flex flex-col justify-center items-center w-full">
-          <button className="relative" type="button">
+          <label htmlFor="fileInput" className="relative">
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleOnchangeImage}
+            />
             <img
-              className="min-w-[120px]"
-              src={
-                state?.profile_image !==
-                "https://minio.nutech-integrasi.app/take-home-test/null"
-                  ? state.profile_image
-                  : ProfileFoto
-              }
+              className="w-[100px] h-[100px] rounded-full"
+              src={dataImage ? URL.createObjectURL(dataImage) : ProfileFoto}
               alt="Profile Foto"
             />
             <span className="absolute bottom-0 right-0 border rounded-full p-1">
               <IoPencilOutline size={12} />
             </span>
-          </button>
+          </label>
           <div className="font-bold text-2xl flex flex-row gap-2">
             <span>{state?.firstName} </span>
             <span> {state?.lastName} </span>
@@ -150,7 +185,6 @@ const UpdateProfilePage = () => {
               />
             </div>
             <button
-            
               type="submit"
               className="btn rounded-none bg-red-500 text-white"
             >

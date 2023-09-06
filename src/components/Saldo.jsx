@@ -73,11 +73,11 @@ const Saldo = () => {
       <div
         className={`card bg-saldoImg w-1/2 bg-no-repeat bg-center text-white rounded-2xl`}
       >
-        <div className="card-body">
-          <h2 className="card-title">Saldo Anda</h2>
+        <div className="card-body text-2xl">
+          <h2 className="text-lg">Saldo anda</h2>
           {!isVisible ? (
             <p>
-              Rp.{" "}
+              Rp.
               {dataBalance
                 ? "*".repeat(dataBalance.balance.toString().length)
                 : ""}
@@ -90,12 +90,18 @@ const Saldo = () => {
             <button
               type="button"
               onClick={handleVisibleBalance}
-              className="py-3 pr-20 bg-[#F13B2F] "
+              className="text-sm py-3 pr-20 bg-[#F13B2F] "
             >
               {isVisible ? (
-                <AiOutlineEye size={18} />
+                <span className="flex flex-row items-center gap-2">
+                  <p>Sembunyikan saldo</p>
+                  <AiOutlineEye size={18} />
+                </span>
               ) : (
-                <AiOutlineEyeInvisible size={18} />
+                <span className="flex flex-row items-center gap-2">
+                  <p>Tampilkan saldo</p>
+                  <AiOutlineEyeInvisible size={18} />
+                </span>
               )}
             </button>
           </div>
