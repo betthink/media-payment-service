@@ -5,10 +5,13 @@ import Navbar from "../../components/Navbar";
 import Saldo from "../../components/Saldo";
 import ListHorizontal from "../../components/List/ListHorizontal";
 import { axiosInstance } from "../../utils/axiosInstance";
+import { useSelector } from "react-redux";
+import { userState } from "../../global/states";
+import { tokenLocal } from "../../global/token";
 
 const TransactionPage = () => {
   // variables
-  const token = localStorage.getItem("token");
+  // const { token } = userState();
 
   const [dataTransaction, setdataTransaction] = useState([]);
   // functions
@@ -16,13 +19,12 @@ const TransactionPage = () => {
     try {
       const response = await axiosInstance.get("/transaction/history", {
         headers: {
-          Authorization: `Barier ${token}`,
+          Authorization: `Barier ${tokenLocal}`,
         },
       });
       // console.log(response);
       const { status, data } = response;
       if (status === 200) {
-        console.log(data.data.records);
         setdataTransaction(data.data.records);
       } else {
         console.log("network error");

@@ -1,46 +1,32 @@
 // library
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 // components
 import { axiosInstance } from "../../utils/axiosInstance";
+import { userState } from "../../global/states";
+import { tokenLocal } from "../../global/token";
 
 function Banner() {
   // variables
-  const token = localStorage.getItem("token");
-  const [dataBanner, setdataBanner] = useState([]);
-  // const dataBanner = [
-  //   {
-  //     title: "this is title",
-  //     img: "",
-  //     bgColor: "salmon",
-  //   },
-  //   {
-  //     title: "this is title",
-  //     img: "",
-  //     bgColor: "red",
-  //   },
-  //   {
-  //     title: "this is title",
-  //     img: "",
-  //     bgColor: "grey",
-  //   },
-  //   {
-  //     title: "this is title",
-  //     img: "",
-  //     bgColor: "green",
-  //   },
-  //   {
-  //     title: "this is title",
-  //     img: "",
-  //     bgColor: "pink",
-  //   },
-  // ];
+  // const { token } = userState();
+  const [dataBanner, setdataBanner] = useState(null);
+  const settings = {
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
+  };
   // functions
   const handleGetBanner = async () => {
     try {
       const response = await axiosInstance.get("/banner", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenLocal}`,
         },
       });
       const { status, data } = response;
@@ -54,25 +40,34 @@ function Banner() {
       console.log("error");
     }
   };
+
   useEffect(() => {
     handleGetBanner();
   }, []);
   return (
     <div className="container mt-10">
       <p className="font-bold">Temukan promo menarik</p>
-      <div className="flex flex-row justify-between gap-4 overflow-x-auto ">
-        {dataBanner?.map((item, i) => (
-          <div key={i} className=" min-w-[350px]  h-52 image-full">
-            <figure>
-              <img
-                className="w-full"
-                src={item.banner_image}
-                alt={item.banner_name}
-              />
-            </figure>
-          </div>
-        ))}
-      </div>
+
+      <Slider
+        className="flex flex-row justify-between  overflow-hidden"
+        {...settings}
+      >
+        {dataBanner !== null ? (
+          dataBanner?.map((item, i) => (
+            <div key={i} className=" max-w-[350px]  h-52 image-full">
+              <figure>
+                <img
+                  className="w-full"
+                  src={item.banner_image}
+                  alt={item.banner_name}
+                />
+              </figure>
+            </div>
+          ))
+        ) : (
+          <div>loading</div>
+        )}
+      </Slider>
     </div>
   );
 }

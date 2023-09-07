@@ -15,13 +15,15 @@ import TextInput from "../../components/Form/TextInput";
 import TextInputWithLabel from "../../components/Form/TextInputWithLabel";
 import { IoPencilOutline } from "react-icons/io5";
 import axios from "axios";
+import { userState } from "../../global/states";
+import { tokenLocal } from "../../global/token";
 
 const UpdateProfilePage = () => {
   // variable
   const { state } = useLocation();
   const navigate = useNavigate();
   const [dataImage, setdataImage] = useState(null);
-  const token = localStorage.getItem("token");
+  const [isUpload, setisUpload] = useState(false);
   const initialValues = {
     email: state.email,
     firstName: state.firstName,
@@ -34,7 +36,6 @@ const UpdateProfilePage = () => {
   });
   // functions
   const handleUpdate = async (values) => {
-    // console.log(values);
     const { email, firstName, lastName } = values;
     try {
       const response = await axios({
@@ -43,14 +44,13 @@ const UpdateProfilePage = () => {
         headers: {
           accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenLocal}`,
         },
         data: {
           first_name: firstName,
           last_name: lastName,
         },
       });
-      console.log(response);
       const { data, status } = response;
       if (status === 200) {
         alert(data.message);
@@ -66,9 +66,10 @@ const UpdateProfilePage = () => {
     const file = event.target.files[0];
     if (file) {
       setdataImage(file);
+      setisUpload(true);
     }
   };
-  const handleUploadFIle = async (file) => {
+  const handleUploadImage = async (file) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -86,18 +87,52 @@ const UpdateProfilePage = () => {
         }
       );
 
-      console.log("Berhasil mengunggah file", response.data);
-      return response.data;
+      const { status, data } = response;
+      if (status === 200) {
+        alert(data.message);
+        return response.data;
+      }
     } catch (error) {
-      console.error("Gagal mengunggah file", error);
+      console.error("Gagal upload file", error);
       throw error;
     }
   };
-  useEffect(() => {
-    console.log(UpdateProfilePage);
-  }, [UpdateProfilePage]);
+  const handleOpenModal = () => {
+    document.getElementById("my_modal_5").showModal();
+  };
+  useEffect(() => {}, []);
   return (
     <div>
+      <>
+        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg text-green-600">Konfirmasi!</h3>
+            <p className="py-4">
+              Anda yakin ingin mengganti foto profile anda?
+            </p>
+            <div className="modal-action ">
+              <form
+                method="dialog"
+                className="flex flex-row justify-between w-full"
+              >
+                <button
+                  onClick={() => handleUploadImage(dataImage)}
+                  className="btn bg-green-600 hover:text-green-600 text-white text-sm"
+                >
+                  Yakin
+                </button>
+                <button
+                  onClick={() => setdataImage(null)}
+                  className="btn hover:text-redDominan bg-redDominan text-white text-sm"
+                >
+                  Batal
+                </button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+      </>
+      {isUpload ? handleOpenModal() : null}
       <Navbar />
       <div className=" w-[900px] container justify-center flex flex-col py-6">
         {/* profile img */}

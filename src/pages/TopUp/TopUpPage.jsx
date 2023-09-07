@@ -4,10 +4,12 @@ import Saldo from "../../components/Saldo";
 import SubmitButton from "../../components/Button/SubmitButton";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { userState } from "../../global/states";
+import { tokenLocal } from "../../global/token";
 
 const TopUpPage = () => {
   // variables
-  const token = localStorage.getItem("token");
+  // const { token } = userState();
   const [price, setPrice] = useState(0);
   const [dataSaldo, setdataSaldo] = useState([
     { message: "", balance: "", isLoad: false },
@@ -34,7 +36,7 @@ const TopUpPage = () => {
           headers: {
             accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${tokenLocal}`,
           },
         }
       );
@@ -81,12 +83,12 @@ const TopUpPage = () => {
             value={price === 0 ? "" : price}
             type="text"
             placeholder={"Rp.  Masukkan Nominal"}
-            className="input input-bordered rounded-none w-full"
+            className="input  input-bordered rounded-none w-full"
           />
 
           <SubmitButton
             isDisable={price < 10000 || price > 1000000}
-            bgColor={"red"}
+            bgColor={"bg-redDominan"}
             label={"Top Up"}
           />
         </form>

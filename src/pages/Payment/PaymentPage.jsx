@@ -6,13 +6,14 @@ import TextInput from "../../components/Form/TextInput";
 import SubmitButton from "../../components/Button/SubmitButton";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { tokenLocal } from "../../global/token";
 
 const PaymentPage = () => {
   // variables
   const navigate = useNavigate();
   const location = useLocation();
   const { service_Code, service_price, service_icon } = location.state;
-  const token = localStorage.getItem("token");
+  // const { isLoggin,  token } = useSelector((state) => state.user.value);
 
   // functions
   const handleTransaction = async () => {
@@ -26,7 +27,7 @@ const PaymentPage = () => {
           headers: {
             accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${tokenLocal}`,
           },
         }
       );

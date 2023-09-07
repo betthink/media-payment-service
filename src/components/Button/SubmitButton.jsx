@@ -8,7 +8,7 @@ const SubmitButton = ({ bgColor, label, isDisable, onchange, name }) => {
         onChange={onchange}
         disabled={isDisable}
         type="submit"
-        className={`btn rounded-none bg-${bgColor}-500 text-white`}
+        className={`btn rounded-none ${bgColor} text-white`}
       >
         {label}
       </button>

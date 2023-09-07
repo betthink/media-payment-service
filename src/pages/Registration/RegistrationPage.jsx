@@ -98,7 +98,7 @@ const RegistrationPage = () => {
 
   return (
     <div className="flex flex-row justify-between pt-10 h-screen overflow-hidden container">
-      <div className="w-1/2 flex flex-col text-center items-center">
+      <div className="w-1/2 flex flex-col justify-center text-center items-center">
         <div className="text-lg font-bold text-slate-700">
           <div className="font-thin text-base mb-4">SIMS PPOB</div>
           <div className="mb-10">Lengkapi Data Untuk Membuat Akun</div>

@@ -10,22 +10,26 @@ import ListWithLabel from "../../components/List/ListWithLabel";
 import OutlineButton from "../../components/Button/OutlineButton";
 import { RedButton } from "../../components/Button/RedButton";
 import { axiosInstance } from "../../utils/axiosInstance";
+import { userState } from "../../global/states";
+import { useDispatch } from "react-redux";
+import { logout } from "../../app/useSlicer/user";
+import { tokenLocal } from "../../global/token";
 
 const ProfilePage = () => {
   // varibales
-  const token = localStorage.getItem("token");
+  // const { token, isLoggin } = userState();
   const [dataProfile, setdataProfile] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // functions
   const handleGetProfile = async () => {
     try {
       const response = await axiosInstance.get("/profile", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenLocal}`,
         },
       });
       const { status, data } = response;
-      console.log(data);
       if (status === 200) {
         setdataProfile(data.data);
       } else {
@@ -36,8 +40,9 @@ const ProfilePage = () => {
     }
   };
   const handleLogOut = async () => {
-    await localStorage.clear();
+    localStorage.clear();
     navigate("/login");
+    alert("Anda Berhasil Log out");
   };
   useEffect(() => {
     handleGetProfile();
@@ -50,7 +55,9 @@ const ProfilePage = () => {
         <div className=" flex flex-col justify-center items-center w-full">
           <button className="relative" type="button">
             <img
-              className="min-w-[120px]"
+              width={100}
+              height={100}
+              className=" rounded-full "
               src={
                 dataProfile?.profile_image !==
                 "https://minio.nutech-integrasi.app/take-home-test/null"

@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // components
 import { axiosInstance } from "../../utils/axiosInstance";
+import { userState } from "../../global/states";
+import { tokenLocal } from "../../global/token";
 
 const ServicesList = () => {
   // variables
-  const token = localStorage.getItem("token");
+  // const { token } = userState();
   const [dataServices, setdataServices] = useState([]);
 
   // functions
@@ -14,7 +16,7 @@ const ServicesList = () => {
     try {
       const response = await axiosInstance.get("/services", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenLocal}`,
         },
       });
       const { status, data } = response;
@@ -44,7 +46,7 @@ const ServicesList = () => {
             pathname: "/payment",
           }}
           key={i}
-          className=" w-16 stroke-black  flex flex-col"
+          className=" w-16 stroke-black  flex flex-col min-h-[80px justify-between ]"
         >
           <figure>
             <img

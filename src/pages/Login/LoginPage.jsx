@@ -6,9 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 // components
 import LoginIlustrate from "../../assets/Illustrasi Login.png";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "../../app/useSlicer/user";
 const LoginPage = () => {
   // variables
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const inputAtribute = [
     {
       name: "email",
@@ -37,9 +40,8 @@ const LoginPage = () => {
       .min(8, "Password harus minimal memiliki 8 karakter"),
   });
 
-  // functions
-
   const handleSubmit = async (values) => {
+    const { email, password } = values;
     try {
       const response = await axios({
         method: "post",
@@ -51,9 +53,20 @@ const LoginPage = () => {
         data: values,
       });
       const { data, status } = response;
+
       if (status === 200) {
         alert(data.message);
         localStorage.setItem("token", data.data.token);
+        dispatch(
+          login({
+            email,
+            password,
+            token: data.data.token,
+            isLoggin: true,
+          })
+        );
+     
+
         navigate("/home");
       } else {
         alert("gagal login");
