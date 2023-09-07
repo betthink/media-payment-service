@@ -10,9 +10,7 @@ import ListWithLabel from "../../components/List/ListWithLabel";
 import OutlineButton from "../../components/Button/OutlineButton";
 import { RedButton } from "../../components/Button/RedButton";
 import { axiosInstance } from "../../utils/axiosInstance";
-import { userState } from "../../global/states";
 import { useDispatch } from "react-redux";
-import { logout } from "../../app/useSlicer/user";
 import { tokenLocal } from "../../global/token";
 
 const ProfilePage = () => {

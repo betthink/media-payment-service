@@ -108,7 +108,7 @@ const UpdateProfilePage = () => {
             <img
               className="w-[100px] h-[100px] rounded-full"
               src={
-                dataImage ? URL.createObjectURL(dataImage) : state?.profile_image
+                dataImage ? URL.createObjectURL(dataImage) : ProfileFoto
               }
               alt="Profile Foto"
             />
