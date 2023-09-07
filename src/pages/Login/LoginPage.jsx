@@ -66,7 +66,7 @@ const LoginPage = () => {
         navigate("/home");
       } else {
         console.log(data.message);
-        alert("gagal login");
+        alert("gagal loginn");
       }
     } catch (error) {
       alert(error.response.data.message);
