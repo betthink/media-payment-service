@@ -55,9 +55,8 @@ const ProfilePage = () => {
         <div className=" flex flex-col justify-center items-center w-full">
           <button className="relative" type="button">
             <img
-              width={100}
-              height={100}
-              className=" rounded-full "
+            
+              className=" w-[100px] h-[100px] rounded-full "
               src={
                 dataProfile?.profile_image !==
                 "https://minio.nutech-integrasi.app/take-home-test/null"

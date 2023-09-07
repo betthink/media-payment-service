@@ -7,16 +7,11 @@ import * as yup from "yup";
 // components
 import Navbar from "../../components/Navbar";
 import { ProfileFoto } from "../../components/Image/Images";
-import OutlineButton from "../../components/Button/OutlineButton";
-import { RedButton } from "../../components/Button/RedButton";
-import ListWithLabel from "../../components/List/ListWithLabel";
 
-import TextInput from "../../components/Form/TextInput";
-import TextInputWithLabel from "../../components/Form/TextInputWithLabel";
 import { IoPencilOutline } from "react-icons/io5";
 import axios from "axios";
-import { userState } from "../../global/states";
 import { tokenLocal } from "../../global/token";
+import { axiosInstance } from "../../utils/axiosInstance";
 
 const UpdateProfilePage = () => {
   // variable
@@ -36,14 +31,11 @@ const UpdateProfilePage = () => {
   });
   // functions
   const handleUpdate = async (values) => {
-    const { email, firstName, lastName } = values;
+    const { firstName, lastName } = values;
     try {
-      const response = await axios({
+      const response = await axiosInstance("/profile/update", {
         method: "put",
-        url: "https://take-home-test-api.nutech-integrasi.app/profile/update",
         headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
           Authorization: `Bearer ${tokenLocal}`,
         },
         data: {
@@ -82,11 +74,10 @@ const UpdateProfilePage = () => {
           headers: {
             accept: "application/json",
             "Content-Type": "multipart/form-data",
-            Authorization: `Barier ${token}`,
+            Authorization: `Barier ${tokenLocal}`,
           },
         }
       );
-
       const { status, data } = response;
       if (status === 200) {
         alert(data.message);
@@ -100,39 +91,9 @@ const UpdateProfilePage = () => {
   const handleOpenModal = () => {
     document.getElementById("my_modal_5").showModal();
   };
-  useEffect(() => {}, []);
+
   return (
     <div>
-      <>
-        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg text-green-600">Konfirmasi!</h3>
-            <p className="py-4">
-              Anda yakin ingin mengganti foto profile anda?
-            </p>
-            <div className="modal-action ">
-              <form
-                method="dialog"
-                className="flex flex-row justify-between w-full"
-              >
-                <button
-                  onClick={() => handleUploadImage(dataImage)}
-                  className="btn bg-green-600 hover:text-green-600 text-white text-sm"
-                >
-                  Yakin
-                </button>
-                <button
-                  onClick={() => setdataImage(null)}
-                  className="btn hover:text-redDominan bg-redDominan text-white text-sm"
-                >
-                  Batal
-                </button>
-              </form>
-            </div>
-          </div>
-        </dialog>
-      </>
-      {isUpload ? handleOpenModal() : null}
       <Navbar />
       <div className=" w-[900px] container justify-center flex flex-col py-6">
         {/* profile img */}
@@ -147,7 +108,9 @@ const UpdateProfilePage = () => {
             />
             <img
               className="w-[100px] h-[100px] rounded-full"
-              src={dataImage ? URL.createObjectURL(dataImage) : ProfileFoto}
+              src={
+                dataImage ? URL.createObjectURL(dataImage) : state?.profile_image
+              }
               alt="Profile Foto"
             />
             <span className="absolute bottom-0 right-0 border rounded-full p-1">
@@ -228,6 +191,37 @@ const UpdateProfilePage = () => {
           </Form>
         </Formik>
       </div>
+      {/* modal */}
+      <>
+        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg text-green-600">Konfirmasi!</h3>
+            <p className="py-4">
+              Anda yakin ingin mengganti foto profile anda?
+            </p>
+            <div className="modal-action ">
+              <form
+                method="dialog"
+                className="flex flex-row justify-between w-full"
+              >
+                <button
+                  onClick={() => handleUploadImage(dataImage)}
+                  className="btn bg-green-600 hover:text-green-600 text-white text-sm"
+                >
+                  Yakin
+                </button>
+                <button
+                  onClick={() => setdataImage(null)}
+                  className="btn hover:text-redDominan bg-redDominan text-white text-sm"
+                >
+                  Batal
+                </button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+      </>
+      {isUpload ? handleOpenModal() : null}
     </div>
   );
 };

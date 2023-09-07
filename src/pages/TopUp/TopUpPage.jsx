@@ -4,16 +4,12 @@ import Saldo from "../../components/Saldo";
 import SubmitButton from "../../components/Button/SubmitButton";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { userState } from "../../global/states";
 import { tokenLocal } from "../../global/token";
 
 const TopUpPage = () => {
   // variables
-  // const { token } = userState();
   const [price, setPrice] = useState(0);
-  const [dataSaldo, setdataSaldo] = useState([
-    { message: "", balance: "", isLoad: false },
-  ]);
+
   const navigate = useNavigate();
   const dataPriceSelection = [
     { price: "10.000", value: 10000 },
@@ -62,6 +58,34 @@ const TopUpPage = () => {
     }
   };
   const getValuePrice = (value) => {
+    const handleSubmitTopUp = async (event) => {
+      event.preventDefault();
+      try {
+        const response = await axios.post(
+          "https://take-home-test-api.nutech-integrasi.app/topup",
+          {
+            top_up_amount: parseInt(price),
+          },
+          {
+            headers: {
+              accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${tokenLocal}`,
+            },
+          }
+        );
+
+        const { status, data } = response;
+        console.log(data.data);
+        if (status === 200) {
+          alert(data.message, data.balance);
+        } else {
+          alert("network error");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
     setPrice(value);
   };
   useEffect(() => {});

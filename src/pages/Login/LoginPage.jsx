@@ -40,7 +40,7 @@ const LoginPage = () => {
       .min(8, "Password harus minimal memiliki 8 karakter"),
   });
 
-  const handleSubmit = async (values) => {
+  const handleLogin = async (values) => {
     const { email, password } = values;
     try {
       const response = await axios({
@@ -65,7 +65,6 @@ const LoginPage = () => {
             isLoggin: true,
           })
         );
-     
 
         navigate("/home");
       } else {
@@ -87,7 +86,7 @@ const LoginPage = () => {
 
         <Formik
           initialValues={initialValues}
-          onSubmit={handleSubmit}
+          onSubmit={handleLogin}
           validationSchema={validationSchema}
         >
           <Form className="flex flex-col gap-10 w-[500px]">

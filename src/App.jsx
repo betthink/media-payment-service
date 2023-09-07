@@ -10,12 +10,10 @@ import TransactionPage from "./pages/Transaction/TransactionPage";
 import PaymentPage from "./pages/Payment/PaymentPage";
 import Login from "./pages/Login/LoginPage";
 import UpdateProfilePage from "./pages/Profile/UpdateProfilePage";
-import { Provider } from "react-redux";
-import { store } from "./app/store";
+
 
 const App = () => {
   return (
-    <Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to={"/login"} />} />
@@ -37,7 +35,6 @@ const App = () => {
           />
         </Routes>
       </BrowserRouter>
-    </Provider>
   );
 };
 

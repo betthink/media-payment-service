@@ -5,13 +5,15 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ProfileFoto } from "./Image/Images";
 import { axiosInstance } from "../utils/axiosInstance";
 import { tokenLocal } from "../global/token";
+import { useDispatch, useSelector } from "react-redux";
+import { setDataBalance } from "../app/useSlicer/balance";
 const Saldo = () => {
   // variables
-
   const [dataProfile, setdataProfile] = useState([]);
   const [dataBalance, setdataBalance] = useState(0);
+
   const [isVisible, setisVisible] = useState(false);
- 
+  // const dataBalance = useSelector((state) => state.balance.dataBalance);
   // functions
   const handleGetProfile = async () => {
     try {
@@ -30,8 +32,10 @@ const Saldo = () => {
       console.log(error);
     }
   };
-  const handleGetBalance = async () => {
+
+  const handleBalance = async () => {
     try {
+      // const dispatch = useDispatch();
       const response = await axiosInstance.get("/balance", {
         headers: {
           Authorization: `Bearer ${tokenLocal}`,
@@ -39,31 +43,32 @@ const Saldo = () => {
       });
       const { status, data } = response;
       if (status === 200) {
-        setdataBalance(data.data);
+        setdataBalance(data.data.balance);
       } else {
         console.log("failed request");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleVisibleBalance = () => {
     setisVisible((prev) => !prev);
   };
   useEffect(() => {
-    handleGetBalance();
+    handleBalance();
     handleGetProfile();
   }, []);
   return (
     <section className="flex flex-row items-center mt-10 justify-between container w-full">
       <div className="w-1/2 flex flex-col gap-2 ">
         <img
-          width={90}
           src={
             dataProfile?.profile_image !==
             "https://minio.nutech-integrasi.app/take-home-test/null"
               ? dataProfile.profile_image
               : ProfileFoto
           }
-          className=" rounded-full"
+          className=" w-[100px] h-[100px]  rounded-full"
           alt="Profile Image"
         />
         <div>
@@ -80,12 +85,10 @@ const Saldo = () => {
           {!isVisible ? (
             <p>
               Rp.
-              {dataBalance
-                ? "*".repeat(dataBalance.balance.toString().length)
-                : ""}
+              {dataBalance ? "*".repeat(dataBalance.toString().length) : ""}
             </p>
           ) : (
-            <p>Rp. {dataBalance?.balance}</p>
+            <p>Rp. {dataBalance}</p>
           )}
 
           <div className="card-actions justify-start">
