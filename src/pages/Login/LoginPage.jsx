@@ -1,13 +1,15 @@
 // library
-import React from "react";
+import React, { useEffect } from "react";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 // components
 import LoginIlustrate from "../../assets/Illustrasi Login.png";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../../app/useSlicer/user";
+import { axiosInstance } from "../../utils/axiosInstance";
+import { tokenLocal } from "../../global/token";
+import axios from "axios";
 const LoginPage = () => {
   // variables
   const navigate = useNavigate();
@@ -41,26 +43,21 @@ const LoginPage = () => {
   });
 
   const handleLogin = async (values) => {
-    const { email, password } = values;
     try {
-      const response = await axios({
-        method: "post",
-        url: "https://take-home-test-api.nutech-integrasi.app/login",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: values,
-      });
-      const { data, status } = response;
+      const response = await axios(
+        "https://take-home-test-api.nutech-integrasi.app/login",
+        {
+          method: "post",
+          data: values,
+        }
+      );
 
+      const { data, status } = response;
       if (status === 200) {
         alert(data.message);
         localStorage.setItem("token", data.data.token);
         dispatch(
           login({
-            email,
-            password,
             token: data.data.token,
             isLoggin: true,
           })
@@ -68,13 +65,15 @@ const LoginPage = () => {
 
         navigate("/home");
       } else {
+        console.log(data.message);
         alert("gagal login");
       }
     } catch (error) {
-      console.log(error);
+      alert(error.response.data.message);
     }
   };
 
+  useEffect(() => {}, []);
   return (
     <div className=" flex flex-row justify-between pt-10 h-screen  items-center overflow-hidden container">
       <div className="w-1/2 flex flex-col  text-center items-center">

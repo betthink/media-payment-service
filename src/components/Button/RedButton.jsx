@@ -5,7 +5,7 @@ export const RedButton = ({ label, type, onClick }) => {
     <>
       <button onClick={onClick}
         type={type}
-        className={`btn rounded-none bg-red-500 text-white`}
+        className={`btn rounded-none bg-redDominan text-white`}
       >
         {label}
       </button>

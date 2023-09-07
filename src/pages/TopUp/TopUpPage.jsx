@@ -3,12 +3,13 @@ import Navbar from "../../components/Navbar";
 import Saldo from "../../components/Saldo";
 import SubmitButton from "../../components/Button/SubmitButton";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { tokenLocal } from "../../global/token";
+import { axiosInstance } from "../../utils/axiosInstance";
 
 const TopUpPage = () => {
   // variables
   const [price, setPrice] = useState(0);
+  const [isRefresh, setisRefresh] = useState(false);
 
   const navigate = useNavigate();
   const dataPriceSelection = [
@@ -20,18 +21,17 @@ const TopUpPage = () => {
     { price: "500.000", value: 500000 },
   ];
   // functions
+
   const handleSubmitTopUp = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        "https://take-home-test-api.nutech-integrasi.app/topup",
+      const response = await axiosInstance.post(
+        "/topup",
         {
           top_up_amount: parseInt(price),
         },
         {
           headers: {
-            accept: "application/json",
-            "Content-Type": "application/json",
             Authorization: `Bearer ${tokenLocal}`,
           },
         }
@@ -41,15 +41,7 @@ const TopUpPage = () => {
       console.log(data.data);
       if (status === 200) {
         alert(data.message, data.balance);
-        setdataSaldo((prevData) => {
-          const newData = [...prevData];
-          newData[0] = {
-            ...newData[0],
-            message: data.message,
-            balance: data.balance,
-            isLoad: true,
-          };
-        });
+        window.location.reload();
       } else {
         alert("network error");
       }
@@ -57,38 +49,10 @@ const TopUpPage = () => {
       console.log(error);
     }
   };
-  const getValuePrice = (value) => {
-    const handleSubmitTopUp = async (event) => {
-      event.preventDefault();
-      try {
-        const response = await axios.post(
-          "https://take-home-test-api.nutech-integrasi.app/topup",
-          {
-            top_up_amount: parseInt(price),
-          },
-          {
-            headers: {
-              accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${tokenLocal}`,
-            },
-          }
-        );
 
-        const { status, data } = response;
-        console.log(data.data);
-        if (status === 200) {
-          alert(data.message, data.balance);
-        } else {
-          alert("network error");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    setPrice(value);
-  };
-  useEffect(() => {});
+  useEffect(() => {
+   
+  }, []);
   return (
     <div className="h-screen">
       <Navbar />
@@ -121,7 +85,7 @@ const TopUpPage = () => {
             {dataPriceSelection.map((item, i) => (
               <button
                 key={i}
-                onClick={() => getValuePrice(item.value)}
+                onClick={() => setPrice(item.value)}
                 className="btn btn-outline border-slate-400 rounded-none "
               >
                 Rp.{item.price}

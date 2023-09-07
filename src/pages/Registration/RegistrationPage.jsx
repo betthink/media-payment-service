@@ -97,7 +97,7 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div className="flex flex-row justify-between pt-10 h-screen overflow-hidden container">
+    <div className="flex flex-row justify-between  h-screen overflow-hidden container ">
       <div className="w-1/2 flex flex-col justify-center text-center items-center">
         <div className="text-lg font-bold text-slate-700">
           <div className="font-thin text-base mb-4">SIMS PPOB</div>
@@ -134,7 +134,7 @@ const RegistrationPage = () => {
         </Formik>
       </div>
       <div className="w-1/2">
-        <img className="h-full w-full " src={LoginIlustrate} alt="Illustrasi" />
+        <img className="h-full w-full  " src={LoginIlustrate} alt="Illustrasi" />
       </div>
     </div>
   );

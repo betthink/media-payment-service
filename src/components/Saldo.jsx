@@ -5,15 +5,13 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ProfileFoto } from "./Image/Images";
 import { axiosInstance } from "../utils/axiosInstance";
 import { tokenLocal } from "../global/token";
-import { useDispatch, useSelector } from "react-redux";
-import { setDataBalance } from "../app/useSlicer/balance";
 const Saldo = () => {
   // variables
   const [dataProfile, setdataProfile] = useState([]);
   const [dataBalance, setdataBalance] = useState(0);
 
-  const [isVisible, setisVisible] = useState(false);
-  // const dataBalance = useSelector((state) => state.balance.dataBalance);
+  const [isVisible, setisVisible] = useState(true);
+
   // functions
   const handleGetProfile = async () => {
     try {
@@ -33,9 +31,8 @@ const Saldo = () => {
     }
   };
 
-  const handleBalance = async () => {
+   const handleBalance = async () => {
     try {
-      // const dispatch = useDispatch();
       const response = await axiosInstance.get("/balance", {
         headers: {
           Authorization: `Bearer ${tokenLocal}`,

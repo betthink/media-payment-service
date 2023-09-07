@@ -67,8 +67,7 @@ const UpdateProfilePage = () => {
       formData.append("file", file);
       formData.append("keterangan", "Ini adalah gambar profile");
 
-      const response = await axios.put(
-        "https://take-home-test-api.nutech-integrasi.app/profile/image",
+      const response = await axiosInstance.put("/profile/image",
         formData,
         {
           headers: {
