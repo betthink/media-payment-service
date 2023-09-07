@@ -29,11 +29,10 @@ const PaymentPage = () => {
           },
         }
       );
-      console.log(response);
       const { status, data } = response;
       if (status === 200) {
         alert(data.message);
-        navigate("/");
+        window.location.reload();
       } else {
         alert("bad request network");
       }
