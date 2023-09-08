@@ -40,7 +40,8 @@ const TopUpPage = () => {
       const { status, data } = response;
       if (status === 200) {
         alert(data.message, data.balance);
-        window.location.reload();
+        // window.location.reload();
+        navigate('/home')
       } else {
         alert("network error");
       }

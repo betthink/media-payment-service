@@ -70,7 +70,7 @@ const LoginPage = () => {
 
   useEffect(() => {}, []);
   return (
-    <div className="  flex flex-col-reverse  md:flex-row justify-between pt-10 h-screen  items-center overflow-hidden container">
+    <div className="  flex flex-col-reverse  md:flex-row justify-between pt-10 items-center md:h-screen overflow-hidden container">
       <div className="w-1/2 flex flex-col  text-center items-center">
         <div className="text-lg font-bold text-slate-700">
           <div className="font-thin text-base mb-4">SIMS PPOB</div>
@@ -114,7 +114,7 @@ const LoginPage = () => {
           </span>
         </div>
       </div>
-      <div className="w-1/2">
+      <div className="w-1/2 hidden md:flex">
         <img className="md:h-full md:w-full" src={LoginIlustrate} />
       </div>
     </div>

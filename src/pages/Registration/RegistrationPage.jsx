@@ -96,7 +96,7 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div className="flex flex-row justify-between  h-screen overflow-hidden container ">
+    <div className="flex flex-col-reverse md:flex-row justify-center items-center md:justify-between   h-screen overflow-hidden container  ">
       <div className="w-1/2 flex flex-col justify-center text-center items-center">
         <div className="text-lg font-bold text-slate-700">
           <div className="font-thin text-base mb-4">SIMS PPOB</div>
@@ -134,7 +134,7 @@ const RegistrationPage = () => {
       </div>
       <div className="w-1/2">
         <img
-          className="h-full w-full  "
+          className="hidden md:flex h-full w-full  "
           src={LoginIlustrate}
           alt="Illustrasi"
         />

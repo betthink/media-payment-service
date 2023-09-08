@@ -32,7 +32,8 @@ const PaymentPage = () => {
       const { status, data } = response;
       if (status === 200) {
         alert(data.message);
-        window.location.reload();
+        // window.location.reload();
+        navigate('/home')
       } else {
         alert("bad request network");
       }
