@@ -16,6 +16,5 @@ export const cookieSlice = createSlice({
 });
 
 export const { setCookieData } = cookieSlice.actions;
-export default cookieSlice.reducer;
 // selector for token
 export const selectToken = (state) => state.cookie.cookieData.token;
