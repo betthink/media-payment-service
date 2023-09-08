@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "start": "vite",
+    "dev": "vite",
     "build": "vite build",
+    "start": "serve dist -s -n -L -p $PORT",
+
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -20,6 +22,7 @@
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.15.0",
     "react-slick": "^0.29.0",
+    "serve": "^14.2.1",
     "slick-carousel": "^1.8.1",
     "yup": "^1.2.0"
   },
