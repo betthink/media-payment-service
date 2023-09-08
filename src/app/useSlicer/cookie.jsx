@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  cookieData: { token: "" },
+  cookieData: {isLogin: false },
 };
 
 export const cookieSlice = createSlice({

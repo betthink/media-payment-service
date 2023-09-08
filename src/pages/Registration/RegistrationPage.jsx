@@ -127,13 +127,17 @@ const RegistrationPage = () => {
               type="submit"
               className="btn rounded-none bg-red-500 text-white"
             >
-              Masuk
+              Registrasi
             </button>
           </Form>
         </Formik>
       </div>
       <div className="w-1/2">
-        <img className="h-full w-full  " src={LoginIlustrate} alt="Illustrasi" />
+        <img
+          className="h-full w-full  "
+          src={LoginIlustrate}
+          alt="Illustrasi"
+        />
       </div>
     </div>
   );

@@ -8,8 +8,6 @@ import LoginIlustrate from "../../assets/Illustrasi Login.png";
 import { useDispatch } from "react-redux";
 import { login } from "../../app/useSlicer/user";
 import { axiosInstance } from "../../utils/axiosInstance";
-import { tokenLocal } from "../../global/token";
-import axios from "axios";
 const LoginPage = () => {
   // variables
   const navigate = useNavigate();
@@ -44,8 +42,8 @@ const LoginPage = () => {
 
   const handleLogin = async (values) => {
     try {
-      const response = await axios(
-        "https://take-home-test-api.nutech-integrasi.app/login",
+      const response = await axiosInstance(
+        "/login",
         {
           method: "post",
           data: values,

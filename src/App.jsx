@@ -1,6 +1,11 @@
 // library
 import React from "react";
-import { BrowserRouter as Router,Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 // components
 import HomePage from "./pages/Home/HomePage";
 import RegistrationPage from "./pages/Registration/RegistrationPage";
@@ -16,17 +21,17 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* <Route element={<ProtectRoutes />}> */}
-          <Route path="/" element={<Navigate to={"login"} />} />
-          <Route path="login" element={<Login />} />
-          <Route  path="home" element={<HomePage />} />
-          <Route path="registration" element={<RegistrationPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="topup" element={<TopUpPage />} />
-          <Route path="transaction" element={<TransactionPage />} />
-          <Route path="payment" element={<PaymentPage />} />
-          <Route path="update-profile" element={<UpdateProfilePage />} />
-        {/* </Route> */}
+        <Route path="/" element={<Navigate to={"/login"} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registration" element={<RegistrationPage />} />
+        <Route element={<ProtectRoutes />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/topup" element={<TopUpPage />} />
+          <Route path="/transaction" element={<TransactionPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/update-profile" element={<UpdateProfilePage />} />
+        </Route>
         <Route
           path="*"
           element={
