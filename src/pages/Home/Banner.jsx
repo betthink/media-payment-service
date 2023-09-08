@@ -13,6 +13,7 @@ function Banner() {
   // variables
   // const { token } = userState();
   const [dataBanner, setdataBanner] = useState(null);
+  const [isRender, setisRender] = useState(false);
   const settings = {
     infinite: true,
     slidesToShow: 3,
@@ -33,6 +34,7 @@ function Banner() {
 
       if (status === 200) {
         setdataBanner(data.data);
+        setisRender(true);
       } else {
         console.log("error");
       }
@@ -43,7 +45,7 @@ function Banner() {
 
   useEffect(() => {
     handleGetBanner();
-  }, []);
+  }, [isRender]);
   return (
     <div className="container mt-10">
       <p className="font-bold">Temukan promo menarik</p>

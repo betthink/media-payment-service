@@ -34,7 +34,7 @@ const ServicesList = () => {
     handleGetServices();
   }, []);
   return (
-    <div className="hidden md:flex flex-row md:gap-5 mt-10 justify-between container md:overflow-x-auto">
+    <div className=" md:flex grid grid-cols-5 flex-row md:gap-5 mt-10 justify-between container md:overflow-x-auto">
       {dataServices?.map((item, i) => (
         <Link
           state={{

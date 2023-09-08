@@ -9,6 +9,8 @@ const Saldo = () => {
   // variables
   const [dataProfile, setdataProfile] = useState([]);
   const [dataBalance, setdataBalance] = useState(0);
+  const [isRender, setisRender] = useState(false);
+  const [isGet, setisGet] = useState(false);
 
   const [isVisible, setisVisible] = useState(true);
 
@@ -23,6 +25,7 @@ const Saldo = () => {
       const { status, data } = response;
       if (status === 200) {
         setdataProfile(data.data);
+        setisGet(true);
       } else {
         console.log("failed request");
       }
@@ -31,7 +34,7 @@ const Saldo = () => {
     }
   };
 
-   const handleBalance = async () => {
+  const handleBalance = async () => {
     try {
       const response = await axiosInstance.get("/balance", {
         headers: {
@@ -41,6 +44,7 @@ const Saldo = () => {
       const { status, data } = response;
       if (status === 200) {
         setdataBalance(data.data.balance);
+        setisRender(true);
       } else {
         console.log("failed request");
       }
@@ -54,7 +58,7 @@ const Saldo = () => {
   useEffect(() => {
     handleBalance();
     handleGetProfile();
-  }, []);
+  }, [isRender, isGet]);
   return (
     <section className="flex flex-row items-center mt-10 justify-between container w-full">
       <div className="w-1/2 flex flex-col gap-2 ">

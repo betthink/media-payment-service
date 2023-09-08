@@ -38,7 +38,6 @@ const TopUpPage = () => {
       );
 
       const { status, data } = response;
-      console.log(data.data);
       if (status === 200) {
         alert(data.message, data.balance);
         window.location.reload();

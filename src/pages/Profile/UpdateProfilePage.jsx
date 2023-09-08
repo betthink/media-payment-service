@@ -67,16 +67,13 @@ const UpdateProfilePage = () => {
       formData.append("file", file);
       formData.append("keterangan", "Ini adalah gambar profile");
 
-      const response = await axiosInstance.put("/profile/image",
-        formData,
-        {
-          headers: {
-            accept: "application/json",
-            "Content-Type": "multipart/form-data",
-            Authorization: `Barier ${tokenLocal}`,
-          },
-        }
-      );
+      const response = await axiosInstance.put("/profile/image", formData, {
+        headers: {
+          accept: "application/json",
+          "Content-Type": "multipart/form-data",
+          Authorization: `Barier ${tokenLocal}`,
+        },
+      });
       const { status, data } = response;
       if (status === 200) {
         alert(data.message);
@@ -90,7 +87,9 @@ const UpdateProfilePage = () => {
   const handleOpenModal = () => {
     document.getElementById("my_modal_5").showModal();
   };
-
+  useEffect(() => {
+    console.log(state.profile_image);
+  });
   return (
     <div>
       <Navbar />
@@ -108,7 +107,9 @@ const UpdateProfilePage = () => {
             <img
               className="w-[100px] h-[100px] rounded-full"
               src={
-                dataImage ? URL.createObjectURL(dataImage) : ProfileFoto
+                dataImage
+              ? URL.createObjectURL(dataImage) 
+                  :state.profile_image || ProfileFoto
               }
               alt="Profile Foto"
             />

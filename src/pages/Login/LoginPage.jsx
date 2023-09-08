@@ -42,13 +42,10 @@ const LoginPage = () => {
 
   const handleLogin = async (values) => {
     try {
-      const response = await axiosInstance(
-        "/login",
-        {
-          method: "post",
-          data: values,
-        }
-      );
+      const response = await axiosInstance("/login", {
+        method: "post",
+        data: values,
+      });
 
       const { data, status } = response;
       if (status === 200) {
@@ -73,7 +70,7 @@ const LoginPage = () => {
 
   useEffect(() => {}, []);
   return (
-    <div className=" flex flex-row justify-between pt-10 h-screen  items-center overflow-hidden container">
+    <div className="  flex flex-col-reverse  md:flex-row justify-between pt-10 h-screen  items-center overflow-hidden container">
       <div className="w-1/2 flex flex-col  text-center items-center">
         <div className="text-lg font-bold text-slate-700">
           <div className="font-thin text-base mb-4">SIMS PPOB</div>
@@ -118,7 +115,7 @@ const LoginPage = () => {
         </div>
       </div>
       <div className="w-1/2">
-        <img className="h-full w-full " src={LoginIlustrate} />
+        <img className="md:h-full md:w-full" src={LoginIlustrate} />
       </div>
     </div>
   );
