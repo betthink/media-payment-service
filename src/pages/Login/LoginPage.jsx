@@ -1,16 +1,18 @@
 // library
 import React, { useEffect } from "react";
-import { ErrorMessage, Field, Formik, Form } from "formik";
-import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 // components
 import LoginIlustrate from "../../assets/Illustrasi Login.png";
-import { useDispatch } from "react-redux";
-import { login } from "../../app/useSlicer/user";
+import { useDispatch, useSelector } from "react-redux";
 import { axiosInstance } from "../../utils/axiosInstance";
+import { setIsLogin } from "../../app/features/user/user-slice";
+import { Button, Form, Input, message as mes } from "antd";
 const LoginPage = () => {
   // variables
   const navigate = useNavigate();
+  const { firstName, lastName, isLoggin, isLoading } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
   const inputAtribute = [
     {
@@ -27,20 +29,9 @@ const LoginPage = () => {
       type: "password",
     },
   ];
-  const initialValues = {
-    email: "",
-    password: "",
-  };
-  // functions
-  const validationSchema = yup.object().shape({
-    email: yup.string().required("Tolong masukkan email dengan benar").email(),
-    password: yup
-      .string()
-      .required()
-      .min(8, "Password harus minimal memiliki 8 karakter"),
-  });
 
   const handleLogin = async (values) => {
+    console.log(values);
     try {
       const response = await axiosInstance("/login", {
         method: "post",
@@ -49,26 +40,23 @@ const LoginPage = () => {
 
       const { data, status } = response;
       if (status === 200) {
-        alert(data.message);
+        mes.success(data.message);
         localStorage.setItem("token", data.data.token);
-        dispatch(
-          login({
-            token: data.data.token,
-            isLoggin: true,
-          })
-        );
 
+        dispatch(setIsLogin(true));
         navigate("/home");
       } else {
         console.log(data.message);
-        alert("gagal loginn");
+        mes.error("gagal loginn");
       }
     } catch (error) {
       alert(error.response.data.message);
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // console.log({ firstName });
+  }, []);
   return (
     <div className="  flex flex-col-reverse  md:flex-row justify-between pt-10 items-center md:h-screen overflow-hidden container">
       <div className="w-1/2 flex flex-col  text-center items-center">
@@ -78,35 +66,34 @@ const LoginPage = () => {
         </div>
         {/* form */}
 
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleLogin}
-          validationSchema={validationSchema}
-        >
-          <Form className="flex flex-col gap-10 w-[500px]">
-            {inputAtribute.map((item, i) => (
-              <div key={i}>
-                <Field
-                  name={item.name}
-                  type={item.type}
-                  placeholder={item.placeholder}
-                  className="input input-bordered rounded-none w-full"
-                />
-                <ErrorMessage
-                  name={item.name}
-                  component="span"
-                  className="text-error "
-                />
-              </div>
-            ))}
-            <button
-              type="submit"
+        <Form onFinish={handleLogin} className="flex flex-col gap-10 w-[500px]">
+          {inputAtribute.map((item, i) => (
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: "field tidak bole kosong",
+                },
+              ]}
+              name={item.name}
+            >
+              <Input
+                type={item.type}
+                placeholder={item.placeholder}
+                className="input input-bordered rounded-none w-full"
+              />
+            </Form.Item>
+          ))}
+          <Form.Item>
+            <Button
+              block
+              htmlType="submit"
               className="btn rounded-none bg-red-500 text-white"
             >
               Masuk
-            </button>
-          </Form>
-        </Formik>
+            </Button>
+          </Form.Item>
+        </Form>
         <div className="mt-10">
           belum punya akun? registrasi
           <span className="text-red-600">

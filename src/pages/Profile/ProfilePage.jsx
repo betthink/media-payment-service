@@ -12,6 +12,7 @@ import { RedButton } from "../../components/Button/RedButton";
 import { axiosInstance } from "../../utils/axiosInstance";
 import { useDispatch } from "react-redux";
 import { tokenLocal } from "../../global/token";
+import { message } from "antd";
 
 const ProfilePage = () => {
   // varibales
@@ -40,7 +41,7 @@ const ProfilePage = () => {
   const handleLogOut = async () => {
     localStorage.clear();
     navigate("/login");
-    alert("Anda Berhasil Log out");
+    message.info("Anda Berhasil Log out");
   };
   useEffect(() => {
     handleGetProfile();

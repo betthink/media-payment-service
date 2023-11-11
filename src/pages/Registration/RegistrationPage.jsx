@@ -99,7 +99,7 @@ const RegistrationPage = () => {
     <div className="flex flex-col-reverse md:flex-row justify-center items-center md:justify-between   h-screen overflow-hidden container  ">
       <div className="w-1/2 flex flex-col justify-center text-center items-center">
         <div className="text-lg font-bold text-slate-700">
-          <div className="font-thin text-base mb-4">SIMS PPOB</div>
+          <div className="font-thin text-base mb-4">E PAYMENT</div>
           <div className="mb-10">Lengkapi Data Untuk Membuat Akun</div>
         </div>
         <Formik

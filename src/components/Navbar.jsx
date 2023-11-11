@@ -11,7 +11,7 @@ const Navbar = () => {
           <span>
             <img src={Logo} alt="Logo" />
           </span>
-          <span> SIMS PPOB</span>
+          <span> E-Payment</span>
         </Link>
       </div>
       <div className="flex-none">

@@ -5,6 +5,7 @@ import TextInput from "../../components/Form/TextInput";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { tokenLocal } from "../../global/token";
+import { message } from "antd";
 
 const PaymentPage = () => {
   // variables
@@ -31,11 +32,11 @@ const PaymentPage = () => {
       );
       const { status, data } = response;
       if (status === 200) {
-        alert(data.message);
+        message.success(data.message);
         // window.location.reload();
-        navigate('/home')
+        navigate("/home");
       } else {
-        alert("bad request network");
+        message.error("bad request network");
       }
     } catch (error) {
       console.log(error);

@@ -4,9 +4,9 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const ProtectRoutes = () => {
-  const user = (state) => state.user.value;
+  const user = (state) => state.user;
   const { isLoggin } = useSelector(user);
-  // console.log(isLoggin);
+
   return isLoggin || tokenLocal !== null ? <Outlet /> : <Navigate to="/" />;
 };
 

@@ -5,6 +5,7 @@ import SubmitButton from "../../components/Button/SubmitButton";
 import { useNavigate } from "react-router-dom";
 import { tokenLocal } from "../../global/token";
 import { axiosInstance } from "../../utils/axiosInstance";
+import { message } from "antd";
 
 const TopUpPage = () => {
   // variables
@@ -39,20 +40,18 @@ const TopUpPage = () => {
 
       const { status, data } = response;
       if (status === 200) {
-        alert(data.message, data.balance);
+        message.success(data.message, data.balance);
         // window.location.reload();
-        navigate('/home')
+        navigate("/home");
       } else {
-        alert("network error");
+        message.error("network error");
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-   
-  }, []);
+  useEffect(() => {}, []);
   return (
     <div className="h-screen">
       <Navbar />

@@ -1,1 +1,1 @@
-export const tokenLocal = localStorage.getItem("token");
+export let tokenLocal = localStorage.getItem("token");
