@@ -19,7 +19,7 @@ import ProtectRoutes from "./utils/ProtectRoutes";
 
 const App = () => {
   return (
-    <Router basename="/login">
+    <Router>
       <Routes>
         <Route path="/" element={<Navigate to={"/login"} />} />
         <Route path="/login" element={<Login />} />
