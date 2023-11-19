@@ -15,10 +15,11 @@ Welcome to our ReactJS and Tailwind CSS website project repository! This project
   - `/components`: Houses React components for different sections of the website.
   - `/styles`: Includes Tailwind CSS files for styling.
   - `/assets`: Stores images, icons, or any static assets used in the project.
+![Porject media payments](https://github.com/betthink/media-payment-service/assets/80962857/448ac45b-9655-4c2c-8b00-31a65182061b)
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/your-username/your-project.git`
+1. Clone the repository: `git clone https://github.com/betthink/media-payment-service.git`
 2. Navigate to the project directory: `cd your-project`
 3. Install dependencies: `npm install`
 4. Run the development server: `npm start`
